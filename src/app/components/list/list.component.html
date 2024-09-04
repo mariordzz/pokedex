@@ -1,0 +1,42 @@
+<!-- titulo pokedex con imagen -->
+<div class="title-container">
+    <div (click)="goHome()" class="title-image-container">
+      <img src="assets/images/pokedex.svg" alt="Pokedex" class="title-image"/>
+    </div>
+  </div>
+
+  <!-- contenedor busqueda -->
+  <div class="search-container">
+    <input [(ngModel)]="pokemonName" placeholder="Enter Pokemon name or number" class="search-input" />
+    <button (click)="searchPokemon()" class="search-button">Search</button>
+  </div>
+  
+  <!-- contender de random -->
+  <div class="actions-container">
+    <button (click)="randomPokemon()" class="random-button">Random!</button>
+  </div>
+  
+  <!-- vista de pokemons -->
+  <div class="pokemon-grid">
+    <div class="pokemon-card" *ngFor="let pokemon of pokemons">
+      <img [src]="pokemon.sprites?.front_default" alt="{{ pokemon.name }}" class="pokemon-image"/>
+      <div class="pokemon-info">
+        <h3>{{ pokemon.name | titlecase }}</h3>
+        <p class="pokemon-id">#{{ pokemon.id }}</p>
+        <div class="pokemon-types">
+          <span class="pokemon-type" *ngFor="let type of pokemon.types">{{ type.type.name | titlecase }}</span>
+        </div>
+        <button [routerLink]="['/pokemon', pokemon.id]" class="details-button">View Details</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- controles de paginacion -->
+  <div class="pagination-controls">
+    <button (click)="firstPage()" [disabled]="currentPage === 1" class="pagination-button">Inicio</button>
+    <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">Anterior</button>
+    <span class="pagination-info">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-button">Siguiente</button>
+    <button (click)="lastPage()" [disabled]="currentPage === totalPages" class="pagination-button">Final</button>
+  </div>
+  

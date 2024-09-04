@@ -1,0 +1,60 @@
+<div *ngIf="pokemon" class="pokemon-card">
+    <!-- info general del pokemon -->
+    <div class="pokemon-header">
+        <h2 class="pokemon-name">{{ pokemon.name | uppercase }}</h2>
+        <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" class="pokemon-image"/>
+    </div>
+    
+    <div class="pokemon-body">
+        <div class="pokemon-stats">
+            <table class="pokemon-table">
+                <tr>
+                    <td><strong>Height:</strong></td>
+                    <td>{{ pokemon.height / 10 }} m</td>
+                </tr>
+                <tr>
+                    <td><strong>Weight:</strong></td>
+                    <td>{{ pokemon.weight / 10 }} kg</td>
+                </tr>
+                <tr>
+                    <td><strong>Abilities:</strong></td>
+                    <td>
+                        <ul class="abilities-list">
+                            <li *ngFor="let ability of pokemon.abilities">
+                                {{ ability.ability.name | titlecase }}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr *ngIf="stats.length > 0">
+                    <td><strong>Stats:</strong></td>
+                    <td>
+                        <ul class="stats-list">
+                            <li *ngFor="let stat of stats" class="stat-item">
+                                <strong>{{ stat.stat.name | titlecase }}:</strong> 
+                                <div class="stat-bar-container">
+                                    <div class="stat-bar" [style.width.%]="stat.base_stat"></div>
+                                </div>
+                                <span class="stat-value">{{ stat.base_stat }}</span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <!-- evoluciones -->
+    <div *ngIf="evolutionChain" class="evolution-section">
+        <strong>Evolutions:</strong>
+        <div class="evolution-chain">
+            <div *ngFor="let evolution of getEvolutions(evolutionChain.chain)" class="evolution-item">
+                <img [src]="getPokemonImage(evolution.species.url)" alt="{{ evolution.species.name }}" class="evolution-image"/>
+                <p>{{ evolution.species.name | titlecase }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- boton regresar -->
+    <button (click)="backhome()" class="back-button">Return</button>
+</div>

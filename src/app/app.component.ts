@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pokedex';
+  selectedPokemonData: any;
+
+  onPokemonSelected(pokemonData: any) {
+    this.selectedPokemonData = pokemonData;
+  }
 }

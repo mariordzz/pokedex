@@ -1,0 +1,104 @@
+.pokemon-card {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    text-align: center;
+}
+
+.pokemon-header {
+    margin-bottom: 20px;
+}
+
+.pokemon-name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.pokemon-image {
+    width: 150px;
+    height: 150px;
+}
+
+.pokemon-body {
+    margin-bottom: 20px;
+}
+
+.pokemon-stats {
+    text-align: left;
+}
+
+.pokemon-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pokemon-table td {
+    padding: 8px;
+}
+
+.abilities-list, .stats-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.stat-bar-container {
+    flex-grow: 1;
+    margin: 0 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.stat-bar {
+    height: 10px;
+    background-color: #76c7c0;
+}
+
+.stat-value {
+    min-width: 50px;
+    text-align: right;
+}
+
+.evolution-section {
+    margin-bottom: 20px;
+}
+
+.evolution-chain {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.evolution-item {
+    margin: 10px;
+    text-align: center;
+}
+
+.evolution-image {
+    width: 80px;
+    height: 80px;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
