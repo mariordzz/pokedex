@@ -21,6 +21,11 @@ export class ListComponent implements OnInit {
 
   selectedPokemon: any;
 
+  isSecretChallengeOpen = false;
+  encryptedMessage = `W'mp xi tpeîx, hiwwmri-qsm yr tixmx tvmrgi, pym hiqerhi Tixmx Qsyxsr. Pym, mp ri wemx tew hiwwmriv. Rm yr glizep, rm yr gemppsy, vmir. Xsyx gi uy'mp zsmx, g'iwx yr kvsw dévs. Epsvw, mp gsqqirgi à pi hiwwmriv ix eywwm h’eyxviw xvygw uy’mp zsmx herw we xêxi. Ix çe, g’iwx tpyw jsvx uyi jsvx !.`;
+  decipheredMessage = '';
+
+
   constructor(
     private pokemonService: PokemonService, 
     private router: Router
@@ -28,6 +33,8 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.loadPokemons();
+    this.decipheredMessage = this.decipherMessage(this.encryptedMessage);
+    console.log(this.decipheredMessage); // Para verificar en la consola
   }
 
   searchPokemon() {
@@ -91,6 +98,27 @@ export class ListComponent implements OnInit {
 
   selectPokemon(pokemon: any){
     this.router.navigate(['/pokemon', pokemon.id]);
+  }
+
+  openSecretChallenge() {
+    this.isSecretChallengeOpen = true;
+  }
+
+  closeSecretChallenge() {
+    this.isSecretChallengeOpen = false;
+  }
+
+  //  descifrar el mensaje usando ROT3 (desplazamiento de 3 posiciones)
+  decipherMessage(encryptedMessage: string, shift: number = -3): string {
+    return encryptedMessage.split('').map(char => {
+      if (char.match(/[a-zA-Z]/)) { 
+        const code = char.charCodeAt(0);
+        const base = (code >= 65 && code <= 90) ? 65 : 97; 
+        return String.fromCharCode(((code - base + shift + 26) % 26) + base); 
+      } else {
+        return char; 
+      }
+    }).join('');
   }
 
   goHome() {

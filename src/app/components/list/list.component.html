@@ -15,6 +15,10 @@
   <div class="actions-container">
     <button (click)="randomPokemon()" class="random-button">Random!</button>
   </div>
+
+  <div class="secret-challenge-container">
+    <button (click)="openSecretChallenge()" class="secret-challenge-button">Secret Challenge</button>
+  </div>
   
   <!-- vista de pokemons -->
   <div class="pokemon-grid">
@@ -39,4 +43,17 @@
     <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-button">Siguiente</button>
     <button (click)="lastPage()" [disabled]="currentPage === totalPages" class="pagination-button">Final</button>
   </div>
+
+ <!-- Modal -->
+<div class="modal" [class.show]="isSecretChallengeOpen">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeSecretChallenge()">&times;</span>
+    <h2>Secret Challenge</h2>
+    <p>N=3</p>
+    <p>{{ encryptedMessage }}</p>
+    <h2>Secret...</h2>
+    <p>{{ decipheredMessage }}</p>
+  </div>
+</div>
+
   
