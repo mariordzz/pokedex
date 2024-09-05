@@ -5,20 +5,21 @@
     </div>
   </div>
 
-  <!-- contenedor busqueda -->
+  <!-- cnt busqueda -->
   <div class="search-container">
     <input [(ngModel)]="pokemonName" placeholder="Enter Pokemon name or number" class="search-input" />
     <button (click)="searchPokemon()" class="search-button">Search</button>
   </div>
   
-  <!-- contender de random -->
+  <!-- cont button random -->
   <div class="actions-container">
     <button (click)="randomPokemon()" class="random-button">Random!</button>
   </div>
 
+  <!-- cont button scrt challng 
   <div class="secret-challenge-container">
     <button (click)="openSecretChallenge()" class="secret-challenge-button">Secret Challenge</button>
-  </div>
+  </div>   -->
   
   <!-- vista de pokemons -->
   <div class="pokemon-grid">
@@ -35,7 +36,7 @@
     </div>
   </div>
   
-  <!-- controles de paginacion -->
+  <!-- ctrl de paginacion -->
   <div class="pagination-controls">
     <button (click)="firstPage()" [disabled]="currentPage === 1" class="pagination-button">Inicio</button>
     <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">Anterior</button>
@@ -44,7 +45,7 @@
     <button (click)="lastPage()" [disabled]="currentPage === totalPages" class="pagination-button">Final</button>
   </div>
 
- <!-- Modal -->
+ <!-- modal -->
 <div class="modal" [class.show]="isSecretChallengeOpen">
   <div class="modal-content">
     <span class="close-button" (click)="closeSecretChallenge()">&times;</span>

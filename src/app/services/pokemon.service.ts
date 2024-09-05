@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, from } from 'rxjs';
-
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, forkJoin } from 'rxjs';
+import { catchError} from 'rxjs/operators';
+import { Pokemon, Species, EvolutionChain } from '../models/pokemon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +12,39 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  searchPokemon(name: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${name}`);
+  searchPokemon(name: string): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.apiUrl}/${name}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getPokemons(limit: number = 24, offset: number = 0): Observable<any> {
-    return this.http.get(`${this.apiUrl}?offset=${offset}&limit=${limit}`);
+  getAllPokemons(limit: number = 24, offset: number = 0): Observable<any> {
+    return this.http.get<{ results: { url: string }[], count: number }>(`${this.apiUrl}?offset=${offset}&limit=${limit}`)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  getPokemonDetails(url: string): Observable<any> {
-    return this.http.get(url);
+  getPokemonDetails(url: string): Observable<Pokemon> {
+    return this.http.get<Pokemon>(url).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getSpecies(url: string): Observable<any> {
-    return this.http.get(url);
+  getSpecies(url: string): Observable<Species> {
+    return this.http.get<Species>(url).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getEvolutionChainByUrl(url: string): Observable<any> {
-    return this.http.get(url);
+  getEvolutionChainByUrl(url: string): Observable<EvolutionChain> {
+    return this.http.get<EvolutionChain>(url).pipe(
+      catchError(this.handleError)
+    );
   }
 
+  private handleError(error: HttpErrorResponse) {
+    console.error('error:', error);
+    return throwError(() => new Error('error al procesar la solicitud'));
+  }
 }

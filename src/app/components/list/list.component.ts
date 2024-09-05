@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.loadPokemons();
     this.decipheredMessage = this.decipherMessage(this.encryptedMessage);
-    console.log(this.decipheredMessage); // Para verificar en la consola
+    console.log(this.decipheredMessage); 
   }
 
   searchPokemon() {
@@ -55,7 +55,7 @@ export class ListComponent implements OnInit {
   }
 
   randomPokemon() {
-    const randomId = Math.floor(Math.random() * 1025) + 1; // el pokemon 1025 es el ulitmo
+    const randomId = Math.floor(Math.random() * 1025) + 1;
     this.pokemonService.searchPokemon(randomId.toString()).subscribe(
       data => {
         this.pokemons = [data];
@@ -69,7 +69,7 @@ export class ListComponent implements OnInit {
   }
 
   loadPokemons(): void {
-    this.pokemonService.getPokemons(this.limit, this.offset).subscribe(
+    this.pokemonService.getAllPokemons(this.limit, this.offset).subscribe(
       (response: any) => {
         this.pokemons = response.results;
         this.totalPokemons = response.count;
@@ -98,27 +98,6 @@ export class ListComponent implements OnInit {
 
   selectPokemon(pokemon: any){
     this.router.navigate(['/pokemon', pokemon.id]);
-  }
-
-  openSecretChallenge() {
-    this.isSecretChallengeOpen = true;
-  }
-
-  closeSecretChallenge() {
-    this.isSecretChallengeOpen = false;
-  }
-
-  //  descifrar el mensaje usando ROT3 (desplazamiento de 3 posiciones)
-  decipherMessage(encryptedMessage: string, shift: number = -3): string {
-    return encryptedMessage.split('').map(char => {
-      if (char.match(/[a-zA-Z]/)) { 
-        const code = char.charCodeAt(0);
-        const base = (code >= 65 && code <= 90) ? 65 : 97; 
-        return String.fromCharCode(((code - base + shift + 26) % 26) + base); 
-      } else {
-        return char; 
-      }
-    }).join('');
   }
 
   goHome() {
@@ -155,6 +134,29 @@ export class ListComponent implements OnInit {
       this.offset = (this.totalPages - 1) * this.limit;
       this.loadPokemons();
     }
+  }
+
+  // Parte secretChallenge
+
+  openSecretChallenge() {
+    this.isSecretChallengeOpen = true;
+  }
+
+  closeSecretChallenge() {
+    this.isSecretChallengeOpen = false;
+  }
+
+  //  descifrar el mensaje usando ROT3 (desplazamiento de 3 posiciones)
+  decipherMessage(encryptedMessage: string, shift: number = -3): string {
+    return encryptedMessage.split('').map(char => {
+      if (char.match(/[a-zA-Z]/)) { 
+        const code = char.charCodeAt(0);
+        const base = (code >= 65 && code <= 90) ? 65 : 97; 
+        return String.fromCharCode(((code - base + shift + 26) % 26) + base); 
+      } else {
+        return char; 
+      }
+    }).join('');
   }
 
 }
