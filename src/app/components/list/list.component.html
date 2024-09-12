@@ -7,8 +7,7 @@
 
   <!-- cnt busqueda -->
   <div class="search-container">
-    <input [(ngModel)]="pokemonName" placeholder="Enter Pokemon name or number" class="search-input" />
-    <button (click)="searchPokemon()" class="search-button">Search</button>
+    <input [(ngModel)]="pokemonName" (input)="onSearchInputChange($event)" placeholder="Enter Pokemon name or number" class="search-input" />
   </div>
   
   <!-- cont button random -->
@@ -45,7 +44,7 @@
     <button (click)="lastPage()" [disabled]="currentPage === totalPages" class="pagination-button">Final</button>
   </div>
 
- <!-- modal -->
+ <!-- modal 
 <div class="modal" [class.show]="isSecretChallengeOpen">
   <div class="modal-content">
     <span class="close-button" (click)="closeSecretChallenge()">&times;</span>
@@ -55,6 +54,6 @@
     <h2>Secret...</h2>
     <p>{{ decipheredMessage }}</p>
   </div>
-</div>
+</div> -->
 
   

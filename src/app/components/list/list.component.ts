@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-list',
@@ -21,6 +23,8 @@ export class ListComponent implements OnInit {
 
   selectedPokemon: any;
 
+  searchSubject: Subject<string> = new Subject<string>(); // Subject para la búsqueda en tiempo real
+
   isSecretChallengeOpen = false;
   encryptedMessage = `W'mp xi tpeîx, hiwwmri-qsm yr tixmx tvmrgi, pym hiqerhi Tixmx Qsyxsr. Pym, mp ri wemx tew hiwwmriv. Rm yr glizep, rm yr gemppsy, vmir. Xsyx gi uy'mp zsmx, g'iwx yr kvsw dévs. Epsvw, mp gsqqirgi à pi hiwwmriv ix eywwm h’eyxviw xvygw uy’mp zsmx herw we xêxi. Ix çe, g’iwx tpyw jsvx uyi jsvx !.`;
   decipheredMessage = '';
@@ -33,12 +37,29 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.loadPokemons();
+   
+    this.searchSubject.pipe(
+      debounceTime(300), //  300ms desps de que el usuario deje de scribir
+      distinctUntilChanged() // 
+    ).subscribe((searchTerm: string) => {
+      this.searchPokemon(searchTerm);
+    });
+
     this.decipheredMessage = this.decipherMessage(this.encryptedMessage);
     console.log(this.decipheredMessage); 
+    
   }
 
-  searchPokemon() {
-    if (this.pokemonName.trim() === '') {
+
+
+  onSearchInputChange(event: any) {
+  const searchTerm = event.target.value.trim().toLowerCase();
+  this.searchSubject.next(searchTerm); 
+  }
+
+  searchPokemon(name: string) {
+    if (name === '') {
+      this.loadPokemons(); 
       return;
     }
 
